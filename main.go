@@ -28,7 +28,8 @@ func (s *Station) setNewMame(newName string) {
 func home_page(w http.ResponseWriter, r *http.Request) {
 	bob := User{name: "Andrey Ferubko", email: "ferubko1999@gmail.com", organisation: "LaserLab MSU"}
 	st1 := Station{name: "5586", northernLatitude: 73.1105, longitude: 61.3195, whyLongit: "east"}
-	fmt.Fprintf(w, "Russia North Ecology Map\n")
+	fmt.Fprintf(w, `<h1>Russia North Ecology Base</h1>
+		<b>Some text</b>`)
 	fmt.Fprintf(w, "User: "+bob.name+"\n")
 	fmt.Fprintf(w, "Station: "+st1.getAllInfo()+"\n")
 	st1.setNewMame("Laptev See")
