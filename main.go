@@ -12,6 +12,7 @@ type Station struct {
 	NorthernLatitude float64
 	Longitude        float64
 	WhyLongit        string
+	DeepOfSelection  []float64
 }
 type User struct {
 	Name         string
@@ -29,7 +30,8 @@ func (s *Station) setNewMame(newName string) {
 }
 func home_page(w http.ResponseWriter, r *http.Request) {
 	//bob := User{name: "Andrey Ferubko", email: "ferubko1999@gmail.com", organisation: "LaserLab MSU"}
-	st1 := Station{Name: "5586", NorthernLatitude: 73.1105, Longitude: 61.3195, WhyLongit: "east"}
+	st1 := Station{Name: "5586", NorthernLatitude: 73.1105, Longitude: 61.3195, WhyLongit: "east",
+		DeepOfSelection: []float64{10, 100, 99.1}}
 	tmpl, _ := template.ParseFiles("templates/home_page.html")
 	tmpl.Execute(w, st1)
 	//fmt.Fprintf(w, "User: "+bob.name+"\n")
