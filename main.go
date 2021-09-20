@@ -8,34 +8,34 @@ import (
 )
 
 type Station struct {
-	name             string
-	northernLatitude float64
-	longitude        float64
-	whyLongit        string
+	Name             string
+	NorthernLatitude float64
+	Longitude        float64
+	WhyLongit        string
 }
 type User struct {
-	name         string
-	email        string
-	organisation string
+	Name         string
+	Email        string
+	Organisation string
 }
 
 func (s *Station) getAllInfo() string {
 	return fmt.Sprintf(" station %s is located on %f north latitude ang %f %s longit",
-		s.name, s.northernLatitude, s.longitude, s.whyLongit)
+		s.Name, s.NorthernLatitude, s.Longitude, s.WhyLongit)
 }
 
 func (s *Station) setNewMame(newName string) {
-	s.name = newName
+	s.Name = newName
 }
 func home_page(w http.ResponseWriter, r *http.Request) {
-	bob := User{name: "Andrey Ferubko", email: "ferubko1999@gmail.com", organisation: "LaserLab MSU"}
-	st1 := Station{name: "5586", northernLatitude: 73.1105, longitude: 61.3195, whyLongit: "east"}
+	//bob := User{name: "Andrey Ferubko", email: "ferubko1999@gmail.com", organisation: "LaserLab MSU"}
+	st1 := Station{Name: "5586", NorthernLatitude: 73.1105, Longitude: 61.3195, WhyLongit: "east"}
 	tmpl, _ := template.ParseFiles("templates/home_page.html")
 	tmpl.Execute(w, st1)
-	fmt.Fprintf(w, "User: "+bob.name+"\n")
-	fmt.Fprintf(w, "Station: "+st1.getAllInfo()+"\n")
-	st1.setNewMame("Laptev See")
-	fmt.Fprintf(w, "Station: "+st1.getAllInfo()+"\n")
+	//fmt.Fprintf(w, "User: "+bob.name+"\n")
+	//fmt.Fprintf(w, "Station: "+st1.getAllInfo()+"\n")
+	//st1.setNewMame("Laptev See")
+	//fmt.Fprintf(w, "Station: "+st1.getAllInfo()+"\n")
 }
 
 func article_page(w http.ResponseWriter, r *http.Request) {

@@ -10,12 +10,17 @@
     <h1>Russia North Ecology Base</h1>
     <b>Some text</b>
 		<ol>
-			<li>ferubko</li>
-			<li>krylov</li>
+			<li>Станция {{.Name}}</li>
+			<li>Northern Latitude {{.NorthernLatitude}}</li>
 			<li>labutin</li>
 		</ol>
-		<a href="//vk.com/ferubko99/">Создатель сайта</a>
-		<a href="#anchor">Перейти к якорю</a>
+		<p><a href="//vk.com/ferubko99/">Создатель сайта</a></p>
+        {{ if eq .Name "5586"}}
+        <span> Station 5586</span>
+        {{else}}
+        <span> Not 5586</span>
+        {{end}}
+		<p><a href="#anchor">Перейти к якорю</a></p>
 		<dl>
 			<dt>MSU</dt><dd> <li> Chemistry Faculty</li>
 				<li>Physical Faculty</li></dd>
@@ -28,6 +33,6 @@
     			Институт океанологии
   			</figcaption>
 		</figure>
-		<h1 id="anchor">Якорь</h1>
+		<h1 id="anchor">Other projects from our team</h1>
 </body>
 </html>
