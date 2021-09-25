@@ -1,10 +1,13 @@
 package main
 
-//49.34
+//1.10.00
 import (
+	"database/sql"
 	"fmt"
 	"html/template"
 	"net/http"
+
+	_ "github.com/lib/pq"
 )
 
 type Station struct {
@@ -13,6 +16,11 @@ type Station struct {
 	Longitude        float64
 	WhyLongit        string
 	DeepOfSelection  []float64
+}
+type PostgStations struct {
+	Name             string
+	NorthernLatitude float64
+	Longitude        float64
 }
 type User struct {
 	Name         string
@@ -60,5 +68,31 @@ func handleRequest() {
 }
 
 func main() {
-	handleRequest()
+	//handleRequest()
+	connStr := "user=postgres dbname=firstf password=postgres host=localhost port=5433 sslmode=disable"
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		panic(err)
+	}
+
+	//insert, err := db.Query(`INSERT INTO "Stations" VALUES ('5556',18.9, 90.99)`)
+	//(Name, NorthernLatitude, Longitude)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//defer insert.Close()
+	res, err := db.Query(`SELECT * FROM "public"."Stations"`)
+	if err != nil {
+		panic(err)
+	}
+	for res.Next() {
+		var object PostgStations
+		err := res.Scan(&object.Name, &object.NorthernLatitude, &object.Longitude)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(fmt.Sprintf("Station %s on %f on %f", object.Name, object.NorthernLatitude, object.Longitude))
+	}
+	defer db.Close()
+	fmt.Println("bj")
 }
