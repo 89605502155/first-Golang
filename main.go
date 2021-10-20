@@ -48,27 +48,43 @@ func home_page(w http.ResponseWriter, r *http.Request) {
 	//fmt.Fprintf(w, "Station: "+st1.getAllInfo()+"\n")
 }
 
-func article_page(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Articles set will be here. ")
+func expeditions_page(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles("templates/expeditions_page.html")
+	tmpl.Execute(w, 122)
 }
-
-func stations_page(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "The list of stations will be here")
+func transects_page(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles("templates/transects_page.html")
+	tmpl.Execute(w, 122)
 }
-
+func news_page(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles("templates/news_page.html")
+	tmpl.Execute(w, 122)
+}
+func methods_page(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles("templates/methods_page.html")
+	tmpl.Execute(w, 122)
+}
+func publications_page(w http.ResponseWriter, r *http.Request) {
+	tmpl, _ := template.ParseFiles("templates/publications_page.html")
+	tmpl.Execute(w, 122)
+}
 func map_page(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Map will be here")
+	tmpl, _ := template.ParseFiles("templates/mapfirst.html")
+	tmpl.Execute(w, 122)
 }
 func handleRequest() {
 	http.HandleFunc("/", home_page)
-	http.HandleFunc("/articles/", article_page)
-	http.HandleFunc("/stations/", stations_page)
 	http.HandleFunc("/map/", map_page)
+	http.HandleFunc("/expeditions/", expeditions_page)
+	http.HandleFunc("/transects/", transects_page)
+	http.HandleFunc("/news/", news_page)
+	http.HandleFunc("/methods/", methods_page)
+	http.HandleFunc("/publications/", publications_page)
 	http.ListenAndServe(":8080", nil)
 }
 
 func main() {
-	//handleRequest()
+	handleRequest()
 	connStr := "user=postgres dbname=firstf password=postgres host=localhost port=5433 sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
