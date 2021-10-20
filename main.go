@@ -5,7 +5,11 @@ import (
 	"database/sql"
 	"fmt"
 	"html/template"
+	"io"
 	"net/http"
+	"os"
+
+	"github.com/360EntSecGroup-Skylar/excelize"
 
 	_ "github.com/lib/pq"
 )
@@ -82,9 +86,7 @@ func handleRequest() {
 	http.HandleFunc("/publications/", publications_page)
 	http.ListenAndServe(":8080", nil)
 }
-
-func main() {
-	handleRequest()
+func firstpostgr() error {
 	connStr := "user=postgres dbname=firstf password=postgres host=localhost port=5433 sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
@@ -107,8 +109,34 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println(fmt.Sprintf("Station %s on %f on %f", object.Name, object.NorthernLatitude, object.Longitude))
+		fmt.Printf(fmt.Sprintf("Station %s on %f on %f", object.Name, object.NorthernLatitude, object.Longitude))
 	}
 	defer db.Close()
 	fmt.Println("bj")
+	return nil
+}
+func excelread(out io.Writer, namefile string, pageex string) error {
+	name := "./" + namefile
+	xlsx, err := excelize.OpenFile(name)
+	if err != nil {
+		panic(err)
+	}
+	rows := xlsx.GetRows(pageex)
+	for _, row := range rows {
+		for _, colCell := range row {
+			fmt.Fprintf(out, "\t", colCell)
+		}
+		fmt.Fprintln(out)
+	}
+
+	return nil
+}
+
+func main() {
+	//handleRequest()
+	excelread(os.Stdout, "Stations.xlsx", "Sheet1")
+	err := firstpostgr()
+	if err != nil {
+		panic(err)
+	}
 }
