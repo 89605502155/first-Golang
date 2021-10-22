@@ -133,7 +133,7 @@ func excelread(out io.Writer, namefile string, pageex string) error {
 }
 
 func main() {
-	//handleRequest()
+	handleRequest()
 	excelread(os.Stdout, "Stations.xlsx", "Sheet1")
 	err := firstpostgr()
 	if err != nil {
